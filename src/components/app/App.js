@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import Task from './Task'
 import TaskForm from './TaskForm'
+import Modal from "./Modal";
+import useModal from './useModal';
 
 const App = () => {
+
+    const {appears, toggle} = useModal();
 
     const[tasks,setTasks] = useState([
         {text: "cook",
@@ -41,7 +45,30 @@ const App = () => {
     return (
         <div classname="app">
             <div className="task-list">
-                <TaskForm addTask={addTask} />
+                <button className="button-default" onClick={toggle}>Add Task</button>
+                <Modal
+                    appears={appears}
+                    hide={toggle}
+                    content={
+                        <TaskForm addTask={addTask} />   
+                    }
+                />
+                {/* <button className="button-default" onClick={toggle}>Show Deleted Tasks</button>
+                <Modal
+                    appears={appears}
+                    hide={toggle}
+                    content={
+                    delTasks.map((task, index) =>
+                            (
+                                <Task
+                                key={index}
+                                index={index}
+                                task={task}
+                                completeTask={completeTask}
+                                deleteTask={deleteTask}
+                                />
+                            ))}   
+                /> */}
                 {tasks.map((task, index) =>
                     (
                         <Task
@@ -53,7 +80,7 @@ const App = () => {
                         />
                     ))}
                     <hr />
-                     {delTasks.map((task, index) =>
+                     {/* {delTasks.map((task, index) =>
                     (
                         <Task
                         key={index}
@@ -62,7 +89,7 @@ const App = () => {
                         completeTask={completeTask}
                         deleteTask={deleteTask}
                         />
-                    ))}
+                    ))} */}
             </div>
         </div>
     )
