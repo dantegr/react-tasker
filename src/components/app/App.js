@@ -5,14 +5,23 @@ import TaskForm from './TaskForm'
 const App = () => {
 
     const[tasks,setTasks] = useState([
-        {text: "cook"},
-        {text: "get the thrash out"},
-        {text: "make a react app"}
+        {text: "cook",
+         isCompleted: false},
+        {text: "get the thrash out",
+        isCompleted: false},
+        {text: "make a react app",
+        isCompleted: false}
     ])
 
     const addTask = text => {
-        const newTasks = [...tasks, {text}];
-        setTasks(newTasks);
+        const newTasks = [...tasks, {text}]
+        setTasks(newTasks)
+    }
+
+    const completeTask = index => {
+        const newTasks = [...tasks]
+        newTasks[index].isCompleted= true;
+        setTasks(newTasks)
     }
 
     return (
@@ -25,6 +34,7 @@ const App = () => {
                         key={index}
                         index={index}
                         task={task}
+                        completeTask={completeTask}
                         />
                     ))}
             </div>
