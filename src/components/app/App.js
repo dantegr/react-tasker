@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Task from './Task'
 import TaskForm from './TaskForm'
 import Modal from "./Modal";
-import useModal from './useModal';
+import useModal from './hooks/useModal';
 
 const App = () => {
 
@@ -23,8 +23,8 @@ const App = () => {
     const[delTasks,setDelTasks] = useState([
     ])
 
-    const addTask = text => {
-        const newTasks = [...tasks, {text}]
+    const addTask = (text,dev) => {
+        const newTasks = [...tasks, {text,dev}]
         setTasks(newTasks)
     }
 
@@ -37,7 +37,7 @@ const App = () => {
     const deleteTask = index => {
         const newTasks = [...tasks]
         newTasks[index].isDeleted= true;
-        setDelTasks([...delTasks, newTasks[index] ])
+        setDelTasks([...delTasks, newTasks[index].tex ])
         newTasks.splice(index,1)
         setTasks(newTasks)
     }

@@ -1,23 +1,41 @@
-import React, { useState} from 'react'
+import React from 'react'
+import useInput from './hooks/useInput'
+
 
 const TaskForm = ({addTask}) => {
-    const [value, setValue] = useState("")
+
+    const { value:task, bind:bindTask, reset:resetTask } = useInput('');
+    const { value:dev, bind:bindDev, reset:resetDev } = useInput('');
 
     const handleInput = e => {
         e.preventDefault();
-        if (!value) return;
-        addTask(value);
-        setValue("")
+        // if (!value) return
+        addTask(task,dev)
+        resetTask()
+        resetDev()
     }
 
     return (
         <form onSubmit={handleInput}>
-            <input
+            <label>
+            Task:<input
                 type="text"
                 className="input"
-                value={value}
-                onChange={e => setValue(e.target.value)}
+                {...bindTask}
+                // value={value}
+                // onChange={e => setValue(e.target.value)}
                 />
+            </label>
+            <label>
+            Assign Dev:<input
+                type="text"
+                className="input"
+                {...bindDev}
+                // value={value}
+                // onChange={e => setValue(e.target.value)}
+                />
+            </label>
+            <input type="submit" value="Submit" />
         </form>
     )
 

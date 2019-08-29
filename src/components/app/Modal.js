@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom'
 const Modal = ({ appears, hide, content}) => 
 appears ? ReactDOM.createPortal(
     <React.Fragment>
-        {/* <div className="modal-wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog"> */}
             <div className="modal">
                 <div className="modal-main">
                 <button type="button" className="modal-close-button" data-dismiss="modal" aria-label="Close" onClick={hide}>
@@ -13,7 +12,7 @@ appears ? ReactDOM.createPortal(
             <div>{content}</div>
             </div>
       </div>
-    {/* </div> */}
+
     </React.Fragment>,document.body
 ) : null
 
