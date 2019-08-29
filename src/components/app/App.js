@@ -1,5 +1,6 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import Task from './Task'
+import TaskForm from './TaskForm'
 
 const App = () => {
 
@@ -9,9 +10,15 @@ const App = () => {
         {text: "make a react app"}
     ])
 
+    const addTask = text => {
+        const newTasks = [...tasks, {text}];
+        setTasks(newTasks);
+    }
+
     return (
         <div classname="app">
             <div className="task-list">
+                <TaskForm addTask={addTask} />
                 {tasks.map((task, index) =>
                     (
                         <Task
