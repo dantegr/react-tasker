@@ -1,19 +1,19 @@
 import React from 'react';
 
-const Task = ({ task, index, completeTask, deleteTask}) => {
+const Task = ({ task, index, completeTask, deleteTask, updateTask}) => {
+    
+
     return(
         <div className="task" 
         style={{textDecoration: task.isCompleted ? "line-through" : ""}}>
-            {task.text}
-        
-            <div>
-                <button onClick={() => completeTask(index)}>Complete</button>
-            </div>
-            <div>
-                <button onClick={() => deleteTask(index)}>X</button>
-            </div>
+            Task: {task.text}  Assigned to: {task.dev} 
+            <button onClick={() => updateTask(index)}>Update</button>
+         
+            <button onClick={() => completeTask(index)}>Complete</button>
+            
+            <button onClick={() => deleteTask(index)}>X</button>
+            
         </div>
     )
 }
-
 export default Task

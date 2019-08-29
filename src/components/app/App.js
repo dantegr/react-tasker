@@ -1,74 +1,77 @@
 import React, { useState } from 'react'
 import Task from './Task'
 import TaskForm from './TaskForm'
-import Modal from "./Modal";
-import useModal from './hooks/useModal';
+import Modal from "./Modal"
+
 
 const App = () => {
 
-    const {appears, toggle} = useModal();
+    const [isModalOpen, toggleModal] = useState(false);
 
     const[tasks,setTasks] = useState([
         {text: "cook",
-         isCompleted: false,
-         isDeleted: false},
+         dev:"george",
+         isCompleted: false},
         {text: "get the thrash out",
-        isCompleted: false,
-        isDeleted: false},
+        dev:"jim",
+        isCompleted: false},
         {text: "make a react app",
-        isCompleted: false,
-        isDeleted: false}
+        dev:"mike",
+        isCompleted: false}
     ])
 
-    const[delTasks,setDelTasks] = useState([
-    ])
+    const[delTasks,setDelTasks] = useState([  ])
 
     const addTask = (text,dev) => {
         const newTasks = [...tasks, {text,dev}]
         setTasks(newTasks)
     }
 
-    const completeTask = index => {
-        const newTasks = [...tasks]
-        newTasks[index].isCompleted= true;
+    const updateTask = (text,dev,index) => {
+        const newTasks = [...tasks, {text,dev}]
+        newTasks[index].text = text
+        newTasks[index].dev = dev
         setTasks(newTasks)
     }
 
+
+
+    const completeTask = index => {
+        const newTasks = [...tasks]
+        newTasks[index].isCompleted= true
+        setTasks(newTasks)
+    }
+
+    
+
     const deleteTask = index => {
         const newTasks = [...tasks]
-        newTasks[index].isDeleted= true;
-        setDelTasks([...delTasks, newTasks[index].tex ])
-        newTasks.splice(index,1)
+        const deleTasks = [...delTasks]
+        deleTasks[index] = {text: newTasks[index].text, dev: newTasks[index].dev}
+        setDelTasks(deleTasks)
+        newTasks.splice(index,1)       
         setTasks(newTasks)
     }
 
     return (
         <div classname="app">
             <div className="task-list">
-                <button className="button-default" onClick={toggle}>Add Task</button>
-                <Modal
-                    appears={appears}
-                    hide={toggle}
-                    content={
-                        <TaskForm addTask={addTask} />   
-                    }
-                />
-                {/* <button className="button-default" onClick={toggle}>Show Deleted Tasks</button>
-                <Modal
-                    appears={appears}
-                    hide={toggle}
-                    content={
-                    delTasks.map((task, index) =>
-                            (
-                                <Task
-                                key={index}
-                                index={index}
-                                task={task}
-                                completeTask={completeTask}
-                                deleteTask={deleteTask}
-                                />
+         
+                <TaskForm addTask={addTask}  title="Add New Task" />
+                 <button onClick={() => toggleModal(!isModalOpen)}>Deleted Tasks</button>
+                 <Modal isOpen={isModalOpen} toggle={toggleModal}>
+                    <h1>Deleted Tasks</h1>
+                    {delTasks.map((task, index) =>
+                            ( 
+                                <div key={index}
+                                index={index}>
+                                    <p>Task: {task.text}  Assigned To: {task.dev}</p>
+                                </div>
                             ))}   
-                /> */}
+                    <button onClick={() => toggleModal(false)}>Close</button>
+                    
+                 </Modal>
+       
                 {tasks.map((task, index) =>
                     (
                         <Task
@@ -77,19 +80,11 @@ const App = () => {
                         task={task}
                         completeTask={completeTask}
                         deleteTask={deleteTask}
-                        />
+                        updateTask={updateTask}
+                        
+                            />
                     ))}
                     <hr />
-                     {/* {delTasks.map((task, index) =>
-                    (
-                        <Task
-                        key={index}
-                        index={index}
-                        task={task}
-                        completeTask={completeTask}
-                        deleteTask={deleteTask}
-                        />
-                    ))} */}
             </div>
         </div>
     )
