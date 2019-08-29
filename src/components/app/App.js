@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import Task from './Task'
 import TaskForm from './TaskForm'
-import Modal from "./Modal"
 
 
 const App = () => {
 
-    const [isModalOpen, toggleModal] = useState(false);
 
     const[tasks,setTasks] = useState([
         {text: "cook",
@@ -27,51 +25,51 @@ const App = () => {
         setTasks(newTasks)
     }
 
-    const updateTask = (text,dev,index) => {
-        const newTasks = [...tasks, {text,dev}]
-        newTasks[index].text = text
-        newTasks[index].dev = dev
-        setTasks(newTasks)
+    const addDelTask = (text,dev) => {
+        const newTasks = [...delTasks, {text,dev}]
+        setDelTasks(newTasks)
     }
 
+    const updateTask = (text,dev,index) => {
+        const newTasks = [...tasks]
+        newTasks[index] = { text: text, dev: dev}
+        setTasks(newTasks)
 
+        console.log(newTasks)
+    }
 
     const completeTask = index => {
         const newTasks = [...tasks]
         newTasks[index].isCompleted= true
         setTasks(newTasks)
     }
-
-    
+ 
 
     const deleteTask = index => {
         const newTasks = [...tasks]
-        const deleTasks = [...delTasks]
-        deleTasks[index] = {text: newTasks[index].text, dev: newTasks[index].dev}
-        setDelTasks(deleTasks)
+        addDelTask(newTasks[index].text,newTasks[index].dev )
         newTasks.splice(index,1)       
         setTasks(newTasks)
     }
 
+    const ToggleContent = ({ toggle, content }) => {
+        const [isShown, setIsShown] = React.useState(false);
+        const hide = () => setIsShown(false);
+        const show = () => setIsShown(true);
+      
+        return (
+          <React.Fragment>
+            {toggle(show)}
+            {isShown && content(hide)}
+          </React.Fragment>
+        );
+      }
+
     return (
         <div classname="app">
             <div className="task-list">
-         
-                <TaskForm addTask={addTask}  title="Add New Task" />
-                 <button onClick={() => toggleModal(!isModalOpen)}>Deleted Tasks</button>
-                 <Modal isOpen={isModalOpen} toggle={toggleModal}>
-                    <h1>Deleted Tasks</h1>
-                    {delTasks.map((task, index) =>
-                            ( 
-                                <div key={index}
-                                index={index}>
-                                    <p>Task: {task.text}  Assigned To: {task.dev}</p>
-                                </div>
-                            ))}   
-                    <button onClick={() => toggleModal(false)}>Close</button>
-                    
-                 </Modal>
-       
+            <h1>Tasker</h1>
+            <TaskForm addTask={addTask}  title="Add New Task"  />
                 {tasks.map((task, index) =>
                     (
                         <Task
@@ -80,11 +78,30 @@ const App = () => {
                         task={task}
                         completeTask={completeTask}
                         deleteTask={deleteTask}
-                        updateTask={updateTask}
-                        
+                        content={<div>
+                        <ToggleContent
+                        toggle={show => <button onClick={show}>Update Task</button>}
+                        content={hide => (
+                            <p>
+                           <TaskForm index={index} updateTask={updateTask}  title="Update Task" />
+                            <button onClick={hide}>Close</button>
+                            </p>
+                        )}
+                        />
+                        </div>
+                        }                      
                             />
+                          
                     ))}
                     <hr />
+                    <h1>Deleted Tasks</h1>
+                    {delTasks.map((task, index) =>
+                            ( 
+                                <div key={index}
+                                index={index}>
+                                    <p>Task: {task.text}  Assigned To: {task.dev}</p>
+                                </div>
+                            ))} 
             </div>
         </div>
     )
