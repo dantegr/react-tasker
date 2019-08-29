@@ -1,6 +1,8 @@
 import React from 'react'
 
-const App = () => 
-    <div>Make us proud.</div>
+const App = () => {
+    
 
+    
+}
 export default App
