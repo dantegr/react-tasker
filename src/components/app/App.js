@@ -114,8 +114,10 @@ const App = () => {
                         toggle={show => <button className="button" onClick={show}>Update</button>}
                         content={hide => (
                             <Modal>
+                                <div className="widget-header">
                                 <span className="button-close" onClick={hide}>X</span>
-                                <h1>Update Task</h1>
+                                <h1 className="widget-header__title">Update Task</h1>
+                                </div>
                                 <TaskForm index={index} updateTask={updateTask}  title="Update Task" />
                                 
                             </Modal>
