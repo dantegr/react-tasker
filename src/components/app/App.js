@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
 import Header from './Header'
 import Task from './Task'
 import TaskForm from './TaskForm'
@@ -72,13 +73,26 @@ const App = () => {
         );
       }
 
+      const Modal = ({ children }) => (
+        ReactDOM.createPortal(
+          <div className="modal">
+            {children}
+          </div>,
+          document.body
+        )
+      );
+
     return (
         <div>
             <Header />
         <div className="container">  
         <div className="area">
-            <h1>Tasker</h1>
+            
             <TaskForm addTask={addTask}  title="Add New Task"  />
+            <div className="widget">
+            <div className="widget-header">
+                <h1 className="widget-header__title">Task List</h1>
+            </div>
                 {tasks.map((task, index) =>
                     (
                         <Task
@@ -91,10 +105,12 @@ const App = () => {
                         <ToggleContent
                         toggle={show => <button onClick={show}>Update Task</button>}
                         content={hide => (
-                            <p>
-                           <TaskForm index={index} updateTask={updateTask}  title="Update Task" />
-                            <button onClick={hide}>Close</button>
-                            </p>
+                            <Modal>
+                                <span className="button-close" onClick={hide}>X</span>
+                                <h1>Update Task</h1>
+                                <TaskForm index={index} updateTask={updateTask}  title="Update Task" />
+                                
+                            </Modal>
                         )}
                         />
                         </div>
@@ -104,7 +120,7 @@ const App = () => {
                     ))}
                     
                     </div>
-                   
+                    </div>
                     <div className="area">
                     <h1>Deleted Tasks</h1>
                     {delTasks.map((task, index) =>
