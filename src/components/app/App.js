@@ -85,10 +85,18 @@ const App = () => {
     return (
         <div>
             <Header />
-        <div className="container">  
-        <div className="area">
-            
+            <div className="taskFormAdd">
+            <div className="widget-header">
+            <h1 className="widget-header__title">Add Task</h1>
+            </div>
+            <div className="taskFormAdd-body">
             <TaskForm addTask={addTask}  title="Add New Task"  />
+            </div>
+            </div>
+            
+        <div className="container"> 
+       
+            
             <div className="widget">
             <div className="widget-header">
                 <h1 className="widget-header__title">Task List</h1>
@@ -103,7 +111,7 @@ const App = () => {
                         deleteTask={deleteTask}
                         content={<div>
                         <ToggleContent
-                        toggle={show => <button onClick={show}>Update Task</button>}
+                        toggle={show => <button className="button" onClick={show}>Update</button>}
                         content={hide => (
                             <Modal>
                                 <span className="button-close" onClick={hide}>X</span>
@@ -120,9 +128,12 @@ const App = () => {
                     ))}
                     
                     </div>
+                    
+                    <div className="widget">
+                    <div className="widget-header">
+                    <h1 className="widget-header__title">Deleted Tasks</h1>
                     </div>
-                    <div className="area">
-                    <h1>Deleted Tasks</h1>
+                    <div className="task__text">
                     {delTasks.map((task, index) =>
                             ( 
                                 <div key={index}
@@ -130,6 +141,7 @@ const App = () => {
                                     <p>Task: {task.text}  Assigned To: {task.dev}</p>
                                 </div>
                             ))} 
+                    </div>
                     </div>
             
             </div>

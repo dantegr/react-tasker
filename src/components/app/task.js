@@ -8,12 +8,12 @@ const Task = ({ task, index, completeTask, deleteTask,content}) => {
         style={{textDecoration: task.isCompleted ? "line-through" : ""}}>
            <div className="task__text"> Task: {task.text}  Assigned to: {task.dev} </div>
             
-            <div className="button-task">
+            <div className="btn-group">
             {content} <br />    
-            <button onClick={() => completeTask(index)}>Complete</button>
+            <button className="button" onClick={() => completeTask(index)}>Complete</button>
             <br />
             <br />
-            <button onClick={() => deleteTask(index)}>Delete</button>
+            <button className="button" onClick={() => deleteTask(index)}>Delete</button>
             </div>
             
             
