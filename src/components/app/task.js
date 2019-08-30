@@ -6,9 +6,8 @@ const Task = ({ task, index, completeTask, deleteTask,content}) => {
     return(
         <div className="task" 
         style={{textDecoration: task.isCompleted ? "line-through" : ""}}>
-            Task: {task.text}  Assigned to: {task.dev} 
-            {/* <button onClick={() => updateTask(index)}>Update</button> */}
-
+           <div className="task__text"> Task: {task.text}  Assigned to: {task.dev} </div>
+            
             {content}
          
             <button onClick={() => completeTask(index)}>Complete</button>

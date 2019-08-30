@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Header from './Header'
 import Task from './Task'
 import TaskForm from './TaskForm'
 
@@ -32,10 +33,16 @@ const App = () => {
 
     const updateTask = (text,dev,index) => {
         const newTasks = [...tasks]
+        if (text === ""){
+            newTasks[index] = { text:newTasks[index].text , dev: dev}
+        } else if (dev === "") {
+            newTasks[index] = { text: text, dev:newTasks[index].dev}
+        } else {
         newTasks[index] = { text: text, dev: dev}
+        }
         setTasks(newTasks)
 
-        console.log(newTasks)
+
     }
 
     const completeTask = index => {
@@ -66,8 +73,10 @@ const App = () => {
       }
 
     return (
-        <div classname="app">
-            <div className="task-list">
+        <div>
+            <Header />
+        <div className="container">  
+        <div className="area">
             <h1>Tasker</h1>
             <TaskForm addTask={addTask}  title="Add New Task"  />
                 {tasks.map((task, index) =>
@@ -93,7 +102,10 @@ const App = () => {
                             />
                           
                     ))}
-                    <hr />
+                    
+                    </div>
+                   
+                    <div className="area">
                     <h1>Deleted Tasks</h1>
                     {delTasks.map((task, index) =>
                             ( 
@@ -102,6 +114,8 @@ const App = () => {
                                     <p>Task: {task.text}  Assigned To: {task.dev}</p>
                                 </div>
                             ))} 
+                    </div>
+            
             </div>
         </div>
     )
